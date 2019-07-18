@@ -3,37 +3,70 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>平台</title>
-  <link rel="stylesheet" href="./layui/css/layui.css">
+  <title>测试平台</title>
+  <link rel="stylesheet" href="/static/layui/css/layui.css">
+<style type="text/css">
+
+li img{width:80px;height:80px}
+#menu, #menu li {
+font:15px verdana, arial, sans-serif; /* 设置文字大小和字体样式 */
+padding:20px; /* 设置内边距 */
+float:left; /* 往左浮动 */
+line-height:10px; /* 设置行高，将行高和高度设置同一个值，可以让单行文本垂直居中 */
+}
+#menu p{color:white}
+</style>
+
 </head>
-<body>
+<body class="layui-layout-body" bgcolor="#191970" >
 
-<!-- 你的HTML代码 -->
-<script src="./layui/layui.js"></script>
+
+<div class="layui-layout layui-layout-admin ">
+
+  <div class="layui-header">
+    <div class="layui-logo">测试平台</div>
+    <ul class="layui-nav layui-layout-right">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          {% if request.user %}
+          <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+          {{ request.user }}
+          {% endif %}
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="">个人中心</a></dd>
+          <dd><a href="">消息中心</a></dd>
+          <dd><a href="/register">注册客户端</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item"><a href="">退出</a></li>
+    </ul>
+  </div>
+
+  <div style="position:absolute; height:650px; overflow:auto" class="layui-fluid">
+    <!-- 内容主体区域 -->
+    <ul id="menu">
+    {% for it in results %}
+    <li>
+
+      <a href="{{ it.1 }}" target="_blank">
+        <img src="{{ it.2 }}"/>
+        <p>{{ it.0 }}</p>
+        </a>
+    </li>
+      {% endfor %}
+      </ul>
+  </div>
+
+</div>
+
+<script src="/static/layui/layui.js"></script>
+
 <script>
-//一般直接写在一个js文件中
-layui.use(['layer', 'form'], function(){
-  var layer = layui.layer
-  ,form = layui.form;
-
-  layer.msg('Hello World');
+//JavaScript代码区域
+layui.use('element', function(){
+  var element = layui.element;
 });
 </script>
-<script>
-layui.config({
-  base: '/static/js/modules/' //你存放新模块的目录，注意，不是layui的模块目录
-}).use('main'); //加载入口
-</script>
-
-
-
-
-
-
-
-{% if request.user %}
-    <h1>{{ request.user }}</h1>
-{% endif %}
-    <h1><a href="http://127.0.0.1:30000/login?service=http://127.0.0.1:8000/" target="_blank">客户端8000</a></h1>
 </body>
 </html>

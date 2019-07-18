@@ -5,6 +5,7 @@ import time
 import traceback
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
+import pymysql
 
 from bson import ObjectId
 from django.http import JsonResponse
@@ -178,21 +179,29 @@ class Login_urun(LoginView):
 
 def main(request):
     if is_authenticated(request.user):
-        return render(request, 'main.html')
-    # if 'username' not in request.session:
-    #     print('没有username')
+        conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
+        cursor = conn.cursor()
+        sql = "SELECT * FROM cas_client"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        print(results)
+        cursor.close()
+        conn.close()
+        return render(request, 'main.html', {'results': results})
     else:
         return redirect('cas_login')
-    # user = request.session['username']
-    # print(user)
-    #
-    # if 'tkt' not in request.session:
-    #     return render(request, 'main.html')
-    # tkt = request.session['tkt']
-    # print(tkt)
-
-    #return render(request, 'main.html', {'ticket': tkt})
-
-    #print(request.session)
 
 
+def register(request):
+    return render(request, 'register.html')
+
+def save(request):
+    conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
+    cursor = conn.cursor()
+    sql = 'insert into `cas_client`(`name`, `url`, `img`) values(%s, %s, %s)'
+    values = (request.POST['name'], request.POST['url'], request.POST['img'])
+    cursor.execute(sql, values)
+    conn.commit()
+    cursor.close()
+
+    return redirect('main')

@@ -38,7 +38,9 @@ urlpatterns = [
     path(r'token', auth_views.token, name='auth_token'),
 
 
-    url(r'^login/main/?$', auth_views.main, name='main'),
+    url(r'^main/?$', auth_views.main, name='main'),
     url(r'^login/?$', auth_views.Login_urun.as_view(), name='cas_login'),
 
+    url(r'^register/?$', auth_views.register, name='register'),
+    url(r'^save/?$', auth_views.save, name='save')
 ]
