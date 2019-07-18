@@ -1,0 +1,622 @@
+@charset "utf-8";
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.l_flex {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+}
+html,
+body,
+div,
+table,
+ul,
+li,
+ol,
+dl,
+dd,
+dt,
+a,
+img,
+label,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+body {
+  position: relative;
+}
+input {
+  margin: 0;
+  padding: 0;
+}
+ul,
+ol {
+  list-style: none;
+}
+strong {
+  font-weight: normal;
+}
+em,
+i {
+  font-style: normal;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+textarea {
+  resize: none;
+}
+form {
+  margin: 0;
+}
+button {
+  outline: none!important;
+}
+button:focus {
+  outline: none!important;
+}
+a {
+  color: #364347;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+}
+a:hover {
+  color: #06bdf2;
+  text-decoration: none;
+  outline: none;
+}
+a:focus {
+  outline: none;
+  text-decoration: none;
+}
+.wrap {
+  width: 100%;
+  margin: 0 auto;
+}
+.btn:hover {
+  color: #06bdf2;
+  border-color: #06bdf2;
+}
+h3 {
+  font-size: 18px;
+}
+h4 {
+  font-size: 14px;
+}
+h5 {
+  font-size: 14px;
+}
+.fz24 {
+  font-size: 24px;
+}
+.fz20 {
+  font-size: 20px;
+}
+.fz18 {
+  font-size: 18px;
+}
+.fz16 {
+  font-size: 16px;
+}
+.fz14 {
+  font-size: 14px;
+}
+@media screen and (max-width: 1300px) {
+  body {
+    font-size: 12px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+  h4 {
+    font-size: 12px;
+  }
+  h5 {
+    font-size: 12px;
+  }
+  .fz24 {
+    font-size: 20px;
+  }
+  .fz20 {
+    font-size: 18px;
+  }
+  .fz18 {
+    font-size: 16px;
+  }
+  .fz16 {
+    font-size: 14px;
+  }
+  .fz14 {
+    font-size: 12px;
+  }
+  .btn {
+    font-size: 12px!important;
+  }
+  .form-control {
+    font-size: 12px!important;
+  }
+}
+html,
+body {
+  background-color: #eefbff;
+  min-width: 1260px;
+  color: #666;
+}
+.pull-right {
+  float: right;
+}
+.textcol,
+a:hover,
+a.active {
+  color: #3980d7;
+}
+.banxing {
+  width: 80%;
+  min-width: 1200px;
+  margin: 0 auto;
+}
+.mb40 {
+  margin-bottom: 40px;
+}
+.mb30 {
+  margin-bottom: 30px;
+}
+.mb20 {
+  margin-bottom: 20px;
+}
+.mtb20 {
+  margin: 20px 0;
+}
+.box-shadow {
+  background: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+h1.tit {
+  font-size: 28px;
+  color: #333;
+  border-bottom: 1px solid #d2d2d2;
+  padding: 0 0 15px 25px;
+  margin-bottom: 15px;
+  position: relative;
+}
+h1.tit:before {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  height: 27px;
+  width: 4px;
+  background: #3980d7;
+}
+.dropdown-menu li {
+  margin-bottom: 0!important;
+}
+.dropdown-menu li a:hover {
+  background: #eefbff!important;
+}
+
+/*新建的*/
+.loginWrap {
+  width: 100%;
+  height: 100vh;
+  background: url('../images/login_bg.png') no-repeat center center;
+  background-size: cover;
+  position: relative;
+}
+.loginBox {
+  width: 380px;
+  height: 375px;
+  background: #fbfbfb;
+  border-radius: 2px;
+  position: absolute;
+  top: 50%;
+  right: 21%;
+  padding: 0 38px;
+  margin-top: -187.5px;
+}
+.lg_tit {
+  font-size: 24px;
+  color: #474747;
+  font-weight: 600;
+  margin-top: 36px;
+}
+.lg_main > li {
+  width: 300px;
+  height: 45px;
+  background: white;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  margin-top: 25px;
+}
+.lg_main > li.forget {
+  margin-top: 0;
+  color: #999999;
+  line-height: 45px;
+  border: none;
+}
+.lg_main > li.forget .forLabel {
+  font-weight: 100;
+  cursor: pointer;
+  margin-left: -2px;
+}
+.lg_main > li.forget .forA {
+  color: #999999;
+  float: right;
+}
+.lg_main > li.forget .forA:hover {
+  color: #3980d7;
+}
+.lg_main > li.onload {
+  margin-top: 5px;
+}
+.lg_main > li.onload button {
+  display: inline-block;
+  width: 100%;
+  height: 45px;
+  border-radius: 2px;
+  background: #3980d7;
+  text-align: center;
+  line-height: 45px;
+  font-size: 18px;
+  color: white;
+}
+.lg_main > li.register {
+  text-align: center;
+  background: #fbfbfb;
+}
+.lg_main > li.register a {
+  color: #3980d7;
+}
+.lg_main .name,
+.lg_main .password {
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+  background: #f9f9f9 url('../images/login_name.png') no-repeat center center;
+  border-right: 1px solid #e6e6e6;
+}
+.lg_main .int {
+  display: inline-block;
+  vertical-align: middle;
+  width: 250px;
+  height: 43px;
+  padding: 0 6px;
+  border: none;
+  outline: none;
+}
+.lg_main .password {
+  background: #f9f9f9 url('../images/login_password.png') no-repeat center center;
+}
+/* 注册 */
+.registerBox {
+  height: 535px;
+  margin-top: -267.5px;
+}
+.registerBox .lg_main > li {
+  margin-top: 22px;
+}
+.registerBox .lg_main > li.register {
+  margin-top: 0 !important;
+}
+.redStart {
+  display: inline-block;
+  vertical-align: middle;
+  width: 17px;
+  height: 42px;
+  line-height: 42px;
+  padding-top: 7px;
+  padding-left: 12px;
+  font-size: 20px;
+  color: #ff0000;
+}
+.phone {
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  background: #f9f9f9;
+  border-right: 1px solid #e6e6e6;
+  font-size: 14px;
+  color: #999999;
+  font-weight: 100;
+}
+.reg_int {
+  width: 275px !important;
+}
+.validateLi {
+  border: none !important;
+  background: #fbfbfb !important;
+}
+.validateLi .int {
+  width: 180px;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  padding-left: 20px;
+}
+.validateLi .getVal {
+  float: right;
+  display: inline-block;
+  vertical-align: middle;
+  width: 110px;
+  height: 43px;
+  text-align: center;
+  line-height: 43px;
+  background: #3980d7;
+  color: white;
+  border-radius: 2px;
+}
+@media screen and (max-width: 1400px) {
+  .loginBox {
+    width: 300px;
+    height: 307px;
+    margin-top: -153.5px;
+  }
+  .lg_tit {
+    font-size: 16px;
+    margin-top: 25px;
+  }
+  .lg_main > li {
+    width: 226px;
+    height: 30px;
+  }
+  .lg_main > li.forget {
+    margin-top: 10px;
+    line-height: 26px;
+  }
+  .lg_main > li.onload a {
+    width: 225px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 12px;
+  }
+  .lg_main .name,
+  .lg_main .password {
+    width: 34px;
+    height: 28px;
+  }
+  .lg_main .int {
+    width: 185px;
+    height: 28px;
+  }
+  .registerBox {
+    height: 375px;
+    margin-top: -187.5px;
+  }
+  .registerBox .lg_main > li {
+    margin-top: 15px;
+  }
+  .redStart {
+    width: 12px;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 5px;
+    font-size: 16px;
+  }
+  .reg_int {
+    width: 200px !important;
+  }
+  .phone {
+    width: 34px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+  }
+  .validateLi .int {
+    width: 135px;
+  }
+  .validateLi .getVal {
+    width: 72px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+  }
+}
+/* 注册登录 */
+.mainWrap {
+  width: 65%;
+  margin: 0 auto;
+}
+.listBox {
+  margin: 20px 0;
+}
+.listBox > ul > li {
+  float: left;
+  width: 15.8%;
+  margin-right: 1%;
+  padding: 10px 0;
+  border-radius: 3px;
+  background: #4cc3d4;
+  color: white;
+}
+.listBox > ul > li > p {
+  width: 100%;
+  text-align: center;
+}
+.listBox > ul > li > p:nth-child(2) {
+  font-size: 24px;
+}
+.listBox > ul > li:nth-child(2) {
+  background: #6bc7f8;
+}
+.listBox > ul > li:nth-child(3) {
+  background: #78a9ea;
+}
+.listBox > ul > li:nth-child(4) {
+  background: #00aae1;
+}
+.listBox > ul > li:nth-child(5) {
+  background: #43cd80;
+}
+.listBox > ul > li:last-child {
+  background: #f19351;
+  margin-right: 0;
+}
+.chartWrap1 {
+  width: 100%;
+  height: 705px;
+}
+.cw-left {
+  width: 44.5%;
+  margin-right: 1.5%;
+}
+.cw-right {
+  width: 54%;
+}
+.padding25 {
+  padding: 0 25px;
+}
+.padding10 {
+  padding: 0 10px;
+}
+.bigTit {
+  width: 100%;
+  height: 56px;
+  line-height: 56px;
+  margin-top: 2px;
+  border-bottom: 1px solid #d2d2d2;
+  text-align: center;
+  font-weight: 600;
+  font-size: 18px;
+  color: #666666;
+}
+.topBox {
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 0 15px #e2e2e2;
+}
+.scaleBox {
+  margin-top: 18px;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 0 15px #e2e2e2;
+}
+.twoPie {
+  height: 245px;
+}
+.pieLine {
+  width: 50%;
+}
+.mapBox {
+  padding: 0 25px;
+  background: white;
+  box-shadow: 0 0 15px #e2e2e2;
+}
+.chartWrap2 {
+  position: relative;
+  width: 100%;
+  height: 580px;
+  background: white;
+  margin-top: 15px;
+  border-radius: 3px;
+  box-shadow: 0 0 15px #e2e2e2;
+}
+.aBOX {
+  position: absolute;
+  top: 80px;
+  z-index: 3;
+}
+.aBOX a {
+  display: inline-block;
+  background: white;
+  margin-right: 5px;
+  padding: 0 15px;
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #d3dbe3;
+  border-radius: 2px;
+}
+.aBOX a.active {
+  background: #0fa0e3;
+  color: white;
+}
+.topWrap {
+  margin: 15px 0 30px 0;
+}
+.singleBox {
+  float: left;
+  width: 32.4%;
+  height: 490px;
+  margin-right: 1.4%;
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 0 15px #e2e2e2;
+}
+.singleBox:last-child {
+  margin-right: 0;
+}
+.singleBox .ulWrap {
+  padding: 0 10px;
+  height: 425px;
+  overflow: hidden;
+}
+.singleBox .ulWrap > ul > li {
+  width: 100%;
+  height: 42px;
+  line-height: 42px;
+  border-bottom: 1px dashed #e7e7e7;
+  color: #666666;
+}
+.singleBox .ulWrap > ul > li:last-child {
+  border-bottom: none;
+}
+.singleBox .ulWrap > ul > li .nameLeft {
+  width: 80%;
+  float: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.singleBox .ulWrap > ul > li .nameLeft i {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  vertical-align: middle;
+  background: #d6e1ec;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+.singleBox .ulWrap > ul > li .nameLeft i.first {
+  background: #f19351;
+  color: white;
+}
+.singleBox .ulWrap > ul > li .nameLeft i.second {
+  background: #74c1f8;
+  color: white;
+}
+.singleBox .ulWrap > ul > li .nameLeft i.third {
+  background: #4ed090;
+  color: white;
+}
+.singleBox .ulWrap > ul > li .numRight {
+  width: 20%;
+  float: right;
+  text-align: right;
+}
+

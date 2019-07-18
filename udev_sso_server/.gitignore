@@ -1,0 +1,9 @@
+.idea
+build
+dist
+/static
+.env
+settings.py
+*.sqlite3
+*.egg-info
+*.py[co]

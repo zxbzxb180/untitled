@@ -1,0 +1,2 @@
+include login/static/*/*
+include login/templates/*

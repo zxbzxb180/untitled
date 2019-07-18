@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[[source]]
+url = "http://14.23.114.74:38883/pypi/simple/"
+verify_ssl = false
+name = "udev"
+
+[packages]
+django = "==2.1.1"
+django-mama-cas = "==2.4.0"
+djongo = "==1.2.30"
+udev-settings = "==1.0.1"
+udev-db = "==1.1.2"
+python-dotenv = "*"
+pyjwt = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"

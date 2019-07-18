@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>统一认证平台</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="renderer" content="webkit">
+  <link rel="stylesheet" href="/static/css/custom-bootstrap.css">
+  <link rel="stylesheet" href="/static/css/global.css">
+</head>
+
+<body>
+
+<div class="loginWrap">
+  {% include "message.html" %}
+  <div class="loginBox">
+    <p class="lg_tit">用户登录</p>
+    <form action="" method="post">
+      {% csrf_token %}
+      <ul class="lg_main">
+        <li>
+          <label class="name"></label>
+          <input class="int" name="username" placeholder="请输入账号" type="text" value="">
+        </li>
+        <li>
+          <label class="password"></label>
+          <input class="int" name="password" placeholder="请输入密码" type="password" value="">
+        </li>
+        <li class="forget">
+          {#        <label class="forLabel"><input type="checkbox" name="">&nbsp;记住密码</label>#}
+          {#        <a class="forA" href="javascript:;">忘记密码</a>#}
+        </li>
+        <li class="forget onload">
+          <button href="javascript:;">登 录</button>
+        </li>
+        {#      <li class="forget register">#}
+        {#        <a href="register.html">免费注册</a>#}
+        {#      </li>#}
+      </ul>
+    </form>
+  </div>
+</div>
+
+
+</body>
+</html>
