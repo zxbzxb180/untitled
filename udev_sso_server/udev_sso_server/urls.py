@@ -47,5 +47,6 @@ urlpatterns = [
     url(r'^relation/?$', auth_views.relation, name='relation'),
     url(r'^add/?$', auth_views.add, name='add'),
     url(r'^reduce/?$', auth_views.reduce, name='reduce'),
+    url(r'^delete/?$', auth_views.delete, name='delete'),
 
 ]

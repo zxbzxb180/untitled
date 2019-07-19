@@ -6,6 +6,7 @@ import traceback
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 import pymysql
+from .models import *
 
 from bson import ObjectId
 from django.http import JsonResponse
@@ -134,11 +135,23 @@ class Login_urun(LoginView):
         elif is_authenticated(request.user):
             print(request.user)
             if service:
+                print(service)
                 logger.debug("Service ticket request received by credential requestor")
                 st = ServiceTicket.objects.create_ticket(service=service, user=request.user)
-                if self.warn_user():
-                    return redirect('cas_warn', params={'service': service, 'ticket': st.ticket})
-                return redirect(service, params={'ticket': st.ticket})
+
+                user_id = client_user.objects.get(user=self.request.user)
+
+                name = client_list.objects.get(url=service)
+                try:
+                    access = cas_client.objects.get(name=name.name, user_id=user_id.id)
+                except:
+                    return HttpResponse(str(self.request.user) + '无权访问客户端')
+                if access.access == 1:
+                    if self.warn_user():
+                        return redirect('cas_warn', params={'service': service, 'ticket': st.ticket})
+                    return redirect(service, params={'ticket': st.ticket})
+                else:
+                    return HttpResponse(str(self.request.user) + '无权访问客户端')
             else:
 
                 #msg = _("You are logged in as %s") % request.user
@@ -161,16 +174,17 @@ class Login_urun(LoginView):
         # st = ServiceTicket.objects.create_ticket(user=self.request.user, primary=True)
 
         if service:
+            print(service)
             st_client = ServiceTicket.objects.create_ticket(service=service, user=self.request.user, primary=True)
-            return redirect(service, params={'ticket': st_client.ticket})
-
+            user_id = client_user.objects.get(user=self.request.user)
+            name = client_list.objects.get(url=service)
+            access = cas_client.objects.get(name=name.name, user_id=user_id.id)
+            if access.access == 1:
+                return redirect(service, params={'ticket': st_client.ticket})
+            else:
+                return HttpResponse(str(self.request.user)+'无权访问客户端')
 
         else:
-            #self.request.session['username'] = self.request.POST['username']
-
-            #st = ServiceTicket.objects.create_ticket(user=self.request.user, primary=True)
-            #return redirect('main', params={'ticket': st.ticket})
-            #self.request.session['tkt'] = st
             return redirect('main')
 
 
@@ -179,64 +193,39 @@ class Login_urun(LoginView):
 
 def main(request):
     if is_authenticated(request.user):
-        conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
-        cursor = conn.cursor()
-        sql = "SELECT * FROM cas_client"
-        cursor.execute(sql)
-        results = cursor.fetchall()
-        print(results)
-        cursor.close()
-        conn.close()
+        results = client_list.objects.all()
         return render(request, 'main.html', {'results': results})
     else:
         return redirect('cas_login')
+
 
 
 def register(request):
     return render(request, 'register.html')
 
 def save(request):
-    conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
-    cursor = conn.cursor()
-    sql = 'insert into `cas_client`(`name`, `url`, `img`) values(%s, %s, %s)'
-    values = (request.POST['name'], request.POST['url'], request.POST['img'])
-    cursor.execute(sql, values)
-    sql2 = 'alter table `client_user` add `' + request.POST['name'] + '` varchar(255);'
-    cursor.execute(sql2)
-    conn.commit()
-    cursor.close()
-    conn.close()
+    client_list.objects.create(name=request.POST['name'], url=request.POST['url'], img=request.POST['img'])
     return redirect('main')
 
+
+
+def delete(request):
+    client_list.objects.filter(name=request.POST['name']).delete()
+    return redirect('main')
+
+
 def relation(request):
-    # conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
-    # cursor = conn.cursor()
-    # sql = "SELECT * FROM cas_client"
-    # cursor.execute(sql)
-    # results = cursor.fetchall()
-    # print(results)
-    # cursor.close()
-    # conn.close()
     return render(request, 'relation.html')
 
-def add(request):
-    conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
-    cursor = conn.cursor()
 
-    sql = 'insert into `client_user`(`user`, `'+ request.POST['name'] +'`) values(%s, %s) ON DUPLICATE KEY UPDATE `'+ request.POST['name'] +'`= 1'
-    values = (request.POST['user'], 1)
-    cursor.execute(sql, values)
-    conn.commit()
-    cursor.close()
-    conn.close()
+def add(request):
+    user_id = client_user.objects.get(user=request.POST['user'])
+    cas_client.objects.filter(name=request.POST['name'], user_id=user_id.id).delete()
+    cas_client.objects.create(name=request.POST['name'], access=1, user_id=user_id.id)
     return redirect('relation')
 
+
 def reduce(request):
-    conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
-    cursor = conn.cursor()
-    sql = 'UPDATE client_user SET '+ request.POST['name'] + ' = 0 WHERE user = "' + request.POST['user'] + '"'
-    cursor.execute(sql)
-    conn.commit()
-    cursor.close()
-    conn.close()
+    user_id = client_user.objects.get(user=request.POST['user'])
+    cas_client.objects.filter(name=request.POST['name'], user_id=user_id.id).delete()
     return redirect('relation')

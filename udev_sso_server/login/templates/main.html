@@ -37,7 +37,7 @@ text-align:center;}
         <dl class="layui-nav-child">
           <dd><a href="">个人中心</a></dd>
           <dd><a href="">消息中心</a></dd>
-          <dd><a href="/register">注册客户端</a></dd>
+          <dd><a href="/register">注册/注销客户端</a></dd>
           <dd><a href="/relation">关联用户</a></dd>
         </dl>
       </li>
@@ -51,9 +51,9 @@ text-align:center;}
     {% for it in results %}
     <li>
 
-      <a href="{{ it.1 }}" target="_blank">
-        <img src="{{ it.2 }}"/>
-        <p>{{ it.0 }}</p>
+      <a href="{{ it.url }}" target="_blank">
+        <img src="{{ it.img }}"/>
+        <p>{{ it.name }}</p>
         </a>
     </li>
       {% endfor %}

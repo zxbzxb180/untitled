@@ -9,7 +9,6 @@ import pymysql
 CAS_host = 'http://127.0.0.1:30000/'
 
 def login(request):
-    url = request.build_absolute_uri()
 
     #获取ticket
     tkt = request.GET.get('ticket')
@@ -27,7 +26,7 @@ def login(request):
 
     #打开页面
     response = requests.get(check)
-    print(response.text)
+
 
     userid = ''
 
@@ -51,32 +50,18 @@ def login(request):
             elif 'INVALID_SERVICE' in response.text:
                 return HttpResponse('service无效')
 
-            print(tree)
+
 
             userid = tree[0][0].text
-            print(userid)
-            print(type(userid))
+
+
 
             #设置session保持登录
             #request.session['username'] = userid
 
-    conn = pymysql.connect("127.0.0.1", "root", "123456", "cas", charset='utf8')
-    cursor = conn.cursor()
 
-    sql = 'SELECT name FROM cas_client WHERE url ="http://127.0.0.1:8000"'
-    cursor.execute(sql)
-    result = cursor.fetchone()
-    print(result[0])
-    sql2 = 'SELECT '+result[0]+' FROM client_user WHERE user ="' + userid + '"'
-    cursor.execute(sql2)
-    result2 = cursor.fetchone()
-    print(result2[0])
-    cursor.close()
-    conn.close()
-    if result2[0] == '1':
-        return HttpResponse(userid+'登录成功')
-    else:
-        return HttpResponse(userid+'无权登录此客户端')
+    return HttpResponse(userid+'登录成功')
 
-    #return HttpResponse(userid+'登录成功')
+    #return HttpResponse(userid+'无权登录此客户端')
+
 
