@@ -42,5 +42,10 @@ urlpatterns = [
     url(r'^login/?$', auth_views.Login_urun.as_view(), name='cas_login'),
 
     url(r'^register/?$', auth_views.register, name='register'),
-    url(r'^save/?$', auth_views.save, name='save')
+    url(r'^save/?$', auth_views.save, name='save'),
+
+    url(r'^relation/?$', auth_views.relation, name='relation'),
+    url(r'^add/?$', auth_views.add, name='add'),
+    url(r'^reduce/?$', auth_views.reduce, name='reduce'),
+
 ]

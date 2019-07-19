@@ -1,18 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Title</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<form action="save" method="post">-->
-<!--    {% csrf_token %}-->
-<!--    <input type="url" name="url" value="" placeholder="输入url">-->
-<!--    <input type="image" name="img" value="" placeholder="输入url">-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +24,7 @@
 <div class="layui-form-item">
   <label class="layui-form-label">客户端链接</label>
   <div class="layui-input-block">
-    <input type="url" name="url" required lay-verify="required|url" placeholder="请输入客户端链接" autocomplete="off" class="layui-input">
+    <input type="url" name="url" required lay-verify="required|url" placeholder="请正确输入客户端链接(包含协议)" autocomplete="off" class="layui-input">
   </div>
 </div>
 

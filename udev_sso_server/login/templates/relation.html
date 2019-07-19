@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>关联用户</title>
+  <link rel="stylesheet" href="/static/layui/css/layui.css">
+</head>
+<body>
+
+<!-- 你的HTML代码 -->
+
+<script src="/static/layui/layui.js"></script>
+<br>
+<h1>为用户关联客户端</h1>
+
+<hr>
+<br>
+
+<form action="add" method="post">
+{% csrf_token %}
+    <div class="layui-form-item">
+  <label class="layui-form-label">客户端名称</label>
+  <div class="layui-input-block">
+      <input type="text" name="name" required lay-verify="required" placeholder="请输入客户端名称" autocomplete="off" class="layui-input">
+  </div>
+</div>
+    <div class="layui-form-item">
+  <label class="layui-form-label">用户账号</label>
+  <div class="layui-input-block">
+      <input type="text" name="user" required lay-verify="required" placeholder="请输入用户账号" autocomplete="off" class="layui-input">
+  </div>
+</div>
+
+<div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="formDemo">立即关联</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+
+<br>
+<hr>
+<br>
+<h1>为用户禁用客户端</h1>
+
+<hr>
+<br>
+
+<form action="reduce" method="post">
+{% csrf_token %}
+    <div class="layui-form-item">
+  <label class="layui-form-label">客户端名称</label>
+  <div class="layui-input-block">
+      <input type="text" name="name" required lay-verify="required" placeholder="请输入客户端名称" autocomplete="off" class="layui-input">
+  </div>
+</div>
+    <div class="layui-form-item">
+  <label class="layui-form-label">用户账号</label>
+  <div class="layui-input-block">
+      <input type="text" name="user" required lay-verify="required" placeholder="请输入用户账号" autocomplete="off" class="layui-input">
+  </div>
+</div>
+
+<div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" lay-submit lay-filter="formDemo">取消关联</button>
+      <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+    </div>
+  </div>
+</form>
+
+</body>
+</html>
