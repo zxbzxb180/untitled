@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>管理客户端</title>
+  <link rel="stylesheet" href="/static/layui/css/layui.css">
+</head>
+<body>
+
+<!-- 你的HTML代码 -->
+
+<script src="/static/layui/layui.js"></script>
+<br>
+
+<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+    <h1 style="display: inline;padding:30px;">管理客户端</h1>
+    <p style="display: inline;"><button class="layui-btn layui-btn-sm layui-btn-primary" type="button" data-type="auto" data-method="offset">注册客户端</button></p>
+    <p style="display: inline;"><a href="/main"><button class="layui-btn layui-btn-sm layui-btn-primary" type="button">返回</button></a></p>
+
+</div>
+
+<hr>
+
+<div class="site-demo-button" id="layerDemo2" style="margin-bottom: 0;">
+
+<table class="layui-table" lay-skin="line" lay-size="lg">
+  <colgroup>
+    <col width="150">
+    <col width="200">
+    <col>
+  </colgroup>
+  <thead>
+    <tr>
+      <th>客户端名称</th>
+      <th></th>
+      <th>客户端地址</th>
+      <th></th>
+      <th></th>
+      <th>操作</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+  {% for it in results %}
+
+    <tr>
+      <td>{{ it.name }}</td>
+      <td></td>
+      <td>{{ it.url }}</td>
+      <td></td>
+      <td></td>
+
+<!--      <td><a href="/alter_client?name={{ it.name }}"><button class="layui-btn layui-btn-sm" type="button">修改</button></a></td>-->
+      <td><button data-name="{{it.name}}" class="layui-btn layui-btn-sm" type="button" data-type="auto" data-method="offset">修改</button></td>
+      <td><a href="/delete?name={{ it.name }}"><button class="layui-btn layui-btn-sm layui-btn-danger" type="button">删除</button></a></td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>
+    </div>
+<script>
+layui.use('layer', function(){ //独立版的layer无需执行这一句
+  var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+  //触发事件
+  var active = {
+    offset: function(othis){
+      var type = othis.data('type')
+      ,text = othis.text();
+
+      layer.open({
+        type: 2
+        ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+        ,id: 'layerDemo'+type //防止重复弹出
+        ,content: ['/register', 'no']
+        ,area: ['700px', '450px']
+        ,btn: '关闭'
+
+        ,end: function(){
+          layer.msg('刷新后生效');
+        }
+      });
+    }
+  };
+
+  $('#layerDemo .layui-btn').on('click', function(){
+    var othis = $(this), method = othis.data('method');
+    active[method] ? active[method].call(this, othis) : '';
+  });
+
+});
+</script>
+<script >
+layui.use('layer', function(){ //独立版的layer无需执行这一句
+  var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
+
+  //触发事件
+  var active = {
+    offset: function(othis){
+      var type = othis.data('type')
+      ,name = othis.data('name')
+      ,text = othis.text();
+
+      layer.open({
+        type: 2
+        ,offset: type //具体配置参考：http://www.layui.com/doc/modules/layer.html#offset
+        ,id: 'layerDemo2'+type //防止重复弹出
+        ,content: ['/alter_client?name='+name, 'no']
+        ,area: ['700px', '450px']
+        ,btn: '关闭'
+
+        ,end: function(){
+          layer.msg('刷新后生效');
+        }
+      });
+    }
+  };
+
+  $('#layerDemo2 .layui-btn').on('click', function(){
+    var othis = $(this), method = othis.data('method');
+    active[method] ? active[method].call(this, othis) : '';
+  });
+
+});
+</script>
+
+</body>
+</html>

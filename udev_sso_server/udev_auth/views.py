@@ -111,14 +111,6 @@ class Login_urun(LoginView):
         renew = to_bool(request.GET.get('renew'))
         gateway = to_bool(request.GET.get('gateway'))
 
-        # self.request.GET.get('service')
-        #print(self.request.GET.get('ticket'))
-        # if 'username' in self.request.session and service == None:
-        #     print(self.request.session['username'])
-        #     ticket_r = request.GET.get('ticket')
-        #     return redirect('main', params={'ticket': ticket_r})
-
-
 
         if renew:
             logger.debug("Renew request received by credential requestor")
@@ -132,6 +124,7 @@ class Login_urun(LoginView):
             else:
                 return redirect(service)
 
+        #已登录
         elif is_authenticated(request.user):
             print(request.user)
             if service:
@@ -144,14 +137,19 @@ class Login_urun(LoginView):
                 name = client_list.objects.get(url=service)
                 try:
                     access = cas_client.objects.get(name=name.name, user_id=user_id.id)
+                    print(access.access)
+                    if access.access == 1:
+                        if not self.request.COOKIES.get('username'):
+                            if self.warn_user():
+                                return redirect('cas_warn', params={'service': service, 'ticket': st.ticket})
+                            return redirect(service, params={'ticket': st.ticket})
+                        else:
+                            return HttpResponse('已登录')
+                    else:
+                        return HttpResponse(str(self.request.user) + '无权访问客户端')
                 except:
                     return HttpResponse(str(self.request.user) + '无权访问客户端')
-                if access.access == 1:
-                    if self.warn_user():
-                        return redirect('cas_warn', params={'service': service, 'ticket': st.ticket})
-                    return redirect(service, params={'ticket': st.ticket})
-                else:
-                    return HttpResponse(str(self.request.user) + '无权访问客户端')
+
             else:
 
                 #msg = _("You are logged in as %s") % request.user
@@ -162,6 +160,7 @@ class Login_urun(LoginView):
 
         return super(Login_urun, self).get(request, *args, **kwargs)
 
+    #账号密码有效
     def form_valid(self, form):
 
         login(self.request, form.user)
@@ -178,15 +177,46 @@ class Login_urun(LoginView):
             st_client = ServiceTicket.objects.create_ticket(service=service, user=self.request.user, primary=True)
             user_id = client_user.objects.get(user=self.request.user)
             name = client_list.objects.get(url=service)
-            access = cas_client.objects.get(name=name.name, user_id=user_id.id)
-            if access.access == 1:
-                return redirect(service, params={'ticket': st_client.ticket})
-            else:
-                return HttpResponse(str(self.request.user)+'无权访问客户端')
+            try:
+                access = cas_client.objects.get(name=name.name, user_id=user_id.id)
+
+                if access.access == 1:
+
+                    re = redirect(service, params={'ticket': st_client.ticket})
+                    re.set_cookie('username', self.request.user)
+                    return re
+
+
+                    #return redirect(service, params={'ticket': st_client.ticket})
+                else:
+                    return HttpResponse(str(self.request.user) + '无权访问客户端')
+
+            except:
+                return HttpResponse(str(self.request.user) + '无权访问客户端')
+
+
+
 
         else:
             return redirect('main')
 
+class Logout_urun(LogoutView):
+
+    def get(self, request, *args, **kwargs):
+
+        service = request.GET.get('service')
+        if not service:
+            service = request.GET.get('url')
+        follow_url = getattr(settings, 'MAMA_CAS_FOLLOW_LOGOUT_URL', True)
+        logout_user(request)
+        if service and follow_url:
+            v = redirect(service)
+            v.delete_cookie('username')
+            return v
+
+        v = redirect('cas_login')
+        v.delete_cookie('username')
+        return v
 
 
 
@@ -198,20 +228,45 @@ def main(request):
     else:
         return redirect('cas_login')
 
+def manage(request):
+    results = client_list.objects.all()
+    return render(request, 'manage.html', {'results': results})
+
+
+def alter_client(request):
+    name = request.GET.get('name')
+    print(name)
+    return render(request, 'alter.html', {'name': name})
+
+
+def alter(request):
+    name = request.GET.get('name')
+    print(name)
+    try:
+        client_list.objects.filter(name=name).update(name=request.POST['name'], url=request.POST['url'], img=request.POST['img'])
+    except:
+        return HttpResponse('客户端名已被注册')
+    cas_client.objects.filter(name=name).update(name=request.POST['name'])
+    return HttpResponse('<h1 align="center">修改成功</h1>')
+
+
+def delete(request):
+    name = request.GET.get('name')
+    client_list.objects.filter(name=name).delete()
+    return redirect('manage')
 
 
 def register(request):
     return render(request, 'register.html')
 
+
 def save(request):
-    client_list.objects.create(name=request.POST['name'], url=request.POST['url'], img=request.POST['img'])
-    return redirect('main')
-
-
-
-def delete(request):
     client_list.objects.filter(name=request.POST['name']).delete()
-    return redirect('main')
+    try:
+        client_list.objects.create(name=request.POST['name'], url=request.POST['url'], img=request.POST['img'])
+    except:
+        return HttpResponse('该url已被注册')
+    return HttpResponse('注册成功')
 
 
 def relation(request):
@@ -229,3 +284,6 @@ def reduce(request):
     user_id = client_user.objects.get(user=request.POST['user'])
     cas_client.objects.filter(name=request.POST['name'], user_id=user_id.id).delete()
     return redirect('relation')
+
+def test(request):
+    return render(request, 'test.html')

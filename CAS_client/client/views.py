@@ -1,14 +1,17 @@
 from urllib.request import urlopen
 import requests
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from xml.etree import ElementTree
 import pymysql
+
 
 # cas服务器地址
 CAS_host = 'http://127.0.0.1:30000/'
 
 def login(request):
+    # if request.COOKIES.get('username'):
+    #     return HttpResponse('已登录')
 
     #获取ticket
     tkt = request.GET.get('ticket')
@@ -19,6 +22,9 @@ def login(request):
         redirect = CAS_host + 'login?service=' + request.build_absolute_uri()
 
         return HttpResponseRedirect(redirect)
+
+
+
 
 
     #验证ticket是否有效
@@ -45,6 +51,7 @@ def login(request):
             tree = ElementTree.fromstring(response.text)
 
             if 'INVALID_TICKET' in response.text:
+
                 return HttpResponse('ticket已失效')
 
             elif 'INVALID_SERVICE' in response.text:
@@ -60,8 +67,8 @@ def login(request):
             #request.session['username'] = userid
 
 
-    return HttpResponse(userid+'登录成功')
+            return HttpResponseRedirect('http://127.0.0.1:8000/')
 
-    #return HttpResponse(userid+'无权登录此客户端')
+
 
 

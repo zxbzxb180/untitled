@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>注册页面</title>
+  <title>修改{{ name }}客户端</title>
   <link rel="stylesheet" href="/static/layui/css/layui.css">
 </head>
 <body>
@@ -12,10 +12,10 @@
 
 <script src="/static/layui/layui.js"></script>
 <br>
-<h1>注册客户端</h1>
+<h1>修改{{ name }}客户端</h1>
 <br>
 <hr>
-<form action="save" method="post">
+<form action="/alter?name={{ name }}" method="post">
 {% csrf_token %}
 <div class="layui-form-item">
   <label class="layui-form-label">客户端名称</label>
