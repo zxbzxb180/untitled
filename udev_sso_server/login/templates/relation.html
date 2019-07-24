@@ -12,8 +12,10 @@
 
 <script src="/static/layui/layui.js"></script>
 <br>
-<h1>为用户关联客户端</h1>
-
+<div>
+<h1 style="display: inline;padding:10px;">为用户关联客户端</h1>
+<p style="display: inline;float:right;padding:10px;"><a href="/main"><button class="layui-btn layui-btn-sm layui-btn-primary" type="button">返回</button></a></p>
+</div>
 <hr>
 <br>
 
@@ -53,6 +55,7 @@
 {% csrf_token %}
     <div class="layui-form-item">
   <label class="layui-form-label">客户端名称</label>
+
   <div class="layui-input-block">
       <input type="text" name="name" required lay-verify="required" placeholder="请输入客户端名称" autocomplete="off" class="layui-input">
   </div>

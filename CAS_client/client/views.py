@@ -10,8 +10,6 @@ import pymysql
 CAS_host = 'http://127.0.0.1:30000/'
 
 def login(request):
-    # if request.COOKIES.get('username'):
-    #     return HttpResponse('已登录')
 
     #获取ticket
     tkt = request.GET.get('ticket')
@@ -48,7 +46,7 @@ def login(request):
 
         #验证通过，获取用户
         else:
-            tree = ElementTree.fromstring(response.text)
+
 
             if 'INVALID_TICKET' in response.text:
 
@@ -58,16 +56,17 @@ def login(request):
                 return HttpResponse('service无效')
 
 
-
+            #获取用户名
+            tree = ElementTree.fromstring(response.text)
             userid = tree[0][0].text
+            print(userid)
 
 
 
-            #设置session保持登录
-            #request.session['username'] = userid
 
 
-            return HttpResponseRedirect('http://127.0.0.1:8000/')
+            #return HttpResponseRedirect('http://127.0.0.1:8000/')
+            return HttpResponse('登录成功！')
 
 
 

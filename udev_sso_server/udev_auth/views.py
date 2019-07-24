@@ -124,13 +124,13 @@ class Login_urun(LoginView):
             else:
                 return redirect(service)
 
-        #已登录
+        #已通过身份验证
         elif is_authenticated(request.user):
             print(request.user)
             if service:
                 print(service)
                 logger.debug("Service ticket request received by credential requestor")
-                st = ServiceTicket.objects.create_ticket(service=service, user=request.user)
+                # st = ServiceTicket.objects.create_ticket(service=service, user=request.user)
 
                 user_id = client_user.objects.get(user=self.request.user)
 
@@ -139,12 +139,20 @@ class Login_urun(LoginView):
                     access = cas_client.objects.get(name=name.name, user_id=user_id.id)
                     print(access.access)
                     if access.access == 1:
-                        if not self.request.COOKIES.get('username'):
+                        if self.request.COOKIES.get('username') != str(self.request.user):
+                            st = ServiceTicket.objects.create_ticket(service=service, user=request.user)
                             if self.warn_user():
-                                return redirect('cas_warn', params={'service': service, 'ticket': st.ticket})
-                            return redirect(service, params={'ticket': st.ticket})
+                                re = redirect('cas_warn', params={'service': service, 'ticket': st.ticket})
+                                re.set_cookie('username', self.request.user)
+                                return re
+
+                            re = redirect(service, params={'ticket': st.ticket})
+                            re.set_cookie('username', self.request.user)
+
+                            return re
+                            #return HttpResponse('未登录')
                         else:
-                            return HttpResponse('已登录')
+                            return HttpResponse('之前已登录了啊')
                     else:
                         return HttpResponse(str(self.request.user) + '无权访问客户端')
                 except:
@@ -158,7 +166,17 @@ class Login_urun(LoginView):
 
                 return redirect('main')
 
-        return super(Login_urun, self).get(request, *args, **kwargs)
+
+        #未验证身份
+        if self.request.COOKIES.get('username'):
+            # v = super(Login_urun, self).get(request, *args, **kwargs)
+            # v.delete_cookie('username')
+            # return v
+            return HttpResponse('cookie任然存在')
+        else:
+            return super(Login_urun, self).get(request, *args, **kwargs)
+
+        #return super(Login_urun, self).get(request, *args, **kwargs)
 
     #账号密码有效
     def form_valid(self, form):
@@ -198,26 +216,36 @@ class Login_urun(LoginView):
 
 
         else:
-            return redirect('main')
+            re = redirect('main')
+            #re.set_cookie('username', self.request.user)
+            return re
+            #return redirect('main')
 
 class Logout_urun(LogoutView):
 
     def get(self, request, *args, **kwargs):
 
         service = request.GET.get('service')
+
         if not service:
-            service = request.GET.get('url')
+            #service = request.GET.get('url')
+            service = 'http://127.0.0.1:30000/login'
+        print(service)
         follow_url = getattr(settings, 'MAMA_CAS_FOLLOW_LOGOUT_URL', True)
         logout_user(request)
         if service and follow_url:
+            print(service)
             v = redirect(service)
             v.delete_cookie('username')
             return v
+            #return redirect(service)
 
         v = redirect('cas_login')
-        v.delete_cookie('username')
+        v.delete_cookies('username')
         return v
 
+
+        #return redirect('cas_login')
 
 
 
@@ -244,10 +272,11 @@ def alter(request):
     print(name)
     try:
         client_list.objects.filter(name=name).update(name=request.POST['name'], url=request.POST['url'], img=request.POST['img'])
+        cas_client.objects.filter(name=name).update(name=request.POST['name'])
     except:
         return HttpResponse('客户端名已被注册')
-    cas_client.objects.filter(name=name).update(name=request.POST['name'])
-    return HttpResponse('<h1 align="center">修改成功</h1>')
+
+    return HttpResponse('<h2 align="center">修改成功</h2>')
 
 
 def delete(request):
@@ -266,7 +295,7 @@ def save(request):
         client_list.objects.create(name=request.POST['name'], url=request.POST['url'], img=request.POST['img'])
     except:
         return HttpResponse('该url已被注册')
-    return HttpResponse('注册成功')
+    return HttpResponse('<h2 align="center">注册成功</h2>')
 
 
 def relation(request):
