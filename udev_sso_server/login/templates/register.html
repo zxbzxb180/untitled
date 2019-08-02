@@ -12,10 +12,10 @@
 
 <script src="/static/layui/layui.js"></script>
 <br>
-<h1>注册客户端</h1>
+<h1 style="display: inline;padding:30px;">注册客户端</h1>
 <br>
 <hr>
-<form action="save" method="post">
+<form action="save" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 <div class="layui-form-item">
   <label class="layui-form-label">客户端名称</label>
@@ -25,21 +25,23 @@
 </div>
 
 <div class="layui-form-item">
-  <label class="layui-form-label">客户端链接</label>
+  <label class="layui-form-label">登录链接</label>
   <div class="layui-input-block">
-    <input type="url" name="url" required lay-verify="required|url" placeholder="请正确输入客户端链接(包含协议),如:http://127.0.0.1:8000/" autocomplete="off" class="layui-input">
+    <input type="url" name="url" required lay-verify="required|url" placeholder="请正确输入客户端登录链接(包含协议),如:http://127.0.0.1:8000/" autocomplete="off" class="layui-input">
   </div>
 </div>
-
 
 <div class="layui-form-item">
-  <label class="layui-form-label">客户端图片</label>
+  <label class="layui-form-label">回调链接</label>
   <div class="layui-input-block">
-      <input type="url" name="img" required lay-verify="required|url" placeholder="请输入图片链接" autocomplete="off" class="layui-input">
+    <input type="url" name="callback" required lay-verify="required|url" placeholder="请正确输入客户端回调链接(包含协议),如:http://127.0.0.1:8000/callback/" autocomplete="off" class="layui-input">
   </div>
 </div>
 
-
+<div class="layui-form-item">
+    <label class="layui-form-label">客户端图片</label>
+ <input type="file" name="img" required lay-verify="required">
+</div>
 
 <div class="layui-form-item">
     <div class="layui-input-block">

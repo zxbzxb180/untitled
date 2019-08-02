@@ -12,7 +12,7 @@
 
 <script src="/static/layui/layui.js"></script>
 <br>
-<h1>修改{{ name }}客户端</h1>
+<h1 style="display: inline;padding:30px;">修改{{ name }}客户端</h1>
 <br>
 <hr>
 <form action="/alter?name={{ name }}" method="post">
@@ -20,23 +20,27 @@
 <div class="layui-form-item">
   <label class="layui-form-label">客户端名称</label>
   <div class="layui-input-block">
-      <input type="text" name="name" required lay-verify="required" placeholder="请输入客户端名称" autocomplete="off" class="layui-input">
+      <input type="text" name="name" required lay-verify="required" placeholder="请输入客户端名称" autocomplete="off" class="layui-input" value="{{ result.name }}">
   </div>
 </div>
 
 <div class="layui-form-item">
-  <label class="layui-form-label">客户端链接</label>
+  <label class="layui-form-label">登录链接</label>
   <div class="layui-input-block">
-    <input type="url" name="url" required lay-verify="required|url" placeholder="请正确输入客户端链接(包含协议),如:http://127.0.0.1:8000/" autocomplete="off" class="layui-input">
+    <input type="url" name="url" required lay-verify="required|url" placeholder="请正确输入客户端登录链接(包含协议),如:http://127.0.0.1:8000/" autocomplete="off" class="layui-input" value="{{ result.url }}">
   </div>
 </div>
 
+<div class="layui-form-item">
+  <label class="layui-form-label">回调链接</label>
+  <div class="layui-input-block">
+    <input type="url" name="callback" required lay-verify="required|url" placeholder="请正确输入客户端回调链接(包含协议),如:http://127.0.0.1:8000/callback/" autocomplete="off" class="layui-input" value="{{ result.callback }}">
+  </div>
+</div>
 
 <div class="layui-form-item">
   <label class="layui-form-label">客户端图片</label>
-  <div class="layui-input-block">
-      <input type="url" name="img" required lay-verify="required|url" placeholder="请输入图片链接" autocomplete="off" class="layui-input">
-  </div>
+ <input type="file" name="img">
 </div>
 
 

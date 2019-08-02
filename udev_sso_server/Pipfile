@@ -17,6 +17,7 @@ udev-db = "==1.1.2"
 python-dotenv = "*"
 pyjwt = "*"
 pymysql = "*"
+jquery = "*"
 
 [dev-packages]
 

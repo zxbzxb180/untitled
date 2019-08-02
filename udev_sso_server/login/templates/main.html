@@ -42,6 +42,7 @@ text-align:center;}
         </dl>
       </li>
       <li class="layui-nav-item"><a href="/logout">退出</a></li>
+
     </ul>
   </div>
 
@@ -52,7 +53,7 @@ text-align:center;}
     <li>
 
       <a href="{{ it.url }}" target="_blank">
-        <img src="{{ it.img }}"/>
+        <img src="{{ it.img.url }}"/>
         <p>{{ it.name }}</p>
         </a>
     </li>
@@ -64,11 +65,16 @@ text-align:center;}
 
 <script src="/static/layui/layui.js"></script>
 
+
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
   var element = layui.element;
 });
 </script>
+
+
+
+
 </body>
 </html>

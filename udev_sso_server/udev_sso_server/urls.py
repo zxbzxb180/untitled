@@ -20,7 +20,9 @@ from django.conf.urls import url
 from django.urls import path
 from udev_auth import views as auth_views
 import mama_cas.urls
+from django.conf.urls.static import static
 from mama_cas.views import *
+
 
 
 urlpatterns = [
@@ -54,6 +56,6 @@ urlpatterns = [
     url(r'^delete/?$', auth_views.delete, name='delete'),
 
 
-    url(r'^test/?$', auth_views.test, name='test'),
 
-]
+
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

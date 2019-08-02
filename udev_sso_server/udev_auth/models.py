@@ -15,10 +15,11 @@ class client_user(models.Model):
 class client_list(models.Model):
     name = models.CharField(max_length=255, unique=True)
     url = models.URLField(max_length=255, unique=True)
-    img = models.CharField(max_length=255)
+    callback = models.URLField(max_length=255, unique=True, null=True)
+    img = models.ImageField(upload_to='images',max_length=255, null=True, blank=True)
 
 
-class client_list_del(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    url = models.URLField(max_length=255, unique=True)
-    img = models.CharField(max_length=255)
+
+
+
+
