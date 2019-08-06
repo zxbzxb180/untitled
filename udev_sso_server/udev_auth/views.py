@@ -4,10 +4,9 @@ import logging
 import time
 import traceback
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse
 
 from .models import *
-from django.contrib.auth import logout
 from bson import ObjectId
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -16,8 +15,12 @@ from login.user import user_db, cas_db
 from .tokener import dumps as token_dumps
 from django.contrib import messages
 
+
 from mama_cas.views import *
-import requests
+from mama_cas.models import *
+
+import re
+
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger('udev_auth')
@@ -127,18 +130,18 @@ class Login_urun(LoginView):
 
         #已通过身份验证
         elif is_authenticated(request.user):
-            print(request.user)
             if service:
-                print(service)
+                try:
+                    service = (re.findall(r"(.+?)\?next", service))[0]
+                except IndexError:
+                    pass
                 logger.debug("Service ticket request received by credential requestor")
-                # st = ServiceTicket.objects.create_ticket(service=service, user=request.user)
 
                 user_id = client_user.objects.get(user=self.request.user)
 
                 name = client_list.objects.get(url=service)
                 try:
                     access = cas_client.objects.get(name=name.name, user_id=user_id.id)
-                    print(access.access)
                     if access.access == 1:
                         st = ServiceTicket.objects.create_ticket(service=service, user=request.user)
                         if self.warn_user():
@@ -153,7 +156,6 @@ class Login_urun(LoginView):
 
                 msg = _("You are logged in as %s") % request.user
                 messages.success(request, msg)
-
                 return redirect('main')
 
 
@@ -172,7 +174,10 @@ class Login_urun(LoginView):
         service = self.request.GET.get('service')
 
         if service:
-            print(service)
+            try:
+                service = (re.findall(r"(.+?)\?next", service))[0]
+            except IndexError:
+                pass
             st_client = ServiceTicket.objects.create_ticket(service=service, user=self.request.user, primary=True)
             user_id = client_user.objects.get(user=self.request.user)
             name = client_list.objects.get(url=service)
@@ -236,13 +241,14 @@ def alter_client(request):
 
 def alter(request):
     name = request.GET.get('name')
-    print(name)
     try:
+        service = client_list.objects.get(name=name)
+        ServiceTicket.objects.filter(service=service.url).update(service=request.POST['url'])
+        cas_client.objects.filter(name=name).update(name=request.POST['name'])
         if request.POST['img']:
             client_list.objects.filter(name=name).update(name=request.POST['name'], url=request.POST['url'], callback=request.POST['callback'], img=request.FILES.get('img'))
         else:
             client_list.objects.filter(name=name).update(name=request.POST['name'], url=request.POST['url'], callback=request.POST['callback'])
-        cas_client.objects.filter(name=name).update(name=request.POST['name'])
     except:
         return HttpResponse('客户端名已被注册')
 

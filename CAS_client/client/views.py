@@ -75,7 +75,7 @@ def login(request):
 
                 #v = HttpResponseRedirect('http://127.0.0.1:8000/')
                 v = HttpResponse('登录成功！')
-                auth_login(request, request.user)
+                #auth_login(request, request.user)
                 request.session.create()
                 return v
 

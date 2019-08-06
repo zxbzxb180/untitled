@@ -5,7 +5,7 @@ from setuptools import find_packages, setup
 
 setup(
     name='udev_sso_server',
-    version='0.2.1',
+    version='0.2.3',
     url='',
     description='udev sso server. only support cas',
     author='xtz',

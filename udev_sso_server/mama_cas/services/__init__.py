@@ -3,7 +3,8 @@ import warnings
 
 from django.conf import settings
 from django.utils.module_loading import import_string
-from udev_auth.models import *
+
+from udev_auth import models
 
 def _get_backends():
     """Retrieve the list of configured service backends."""
@@ -93,14 +94,15 @@ def get_logout_url(service):
 
 def logout_allowed(service):
     """Check if a given service identifier should be sent a logout request."""
-    if hasattr(settings, 'MAMA_CAS_SERVICES'):
-        return _is_allowed('logout_allowed', service)
+    # if hasattr(settings, 'MAMA_CAS_SERVICES'):
+        #return _is_allowed('logout_allowed', service)
+    return True
 
-    if hasattr(settings, 'MAMA_CAS_ENABLE_SINGLE_SIGN_OUT'):
-        warnings.warn(
-            'The MAMA_CAS_ENABLE_SINGLE_SIGN_OUT setting is deprecated. SLO '
-            'should be configured using MAMA_CAS_SERVICES.', DeprecationWarning)
-    return getattr(settings, 'MAMA_CAS_ENABLE_SINGLE_SIGN_OUT', False)
+    # if hasattr(settings, 'MAMA_CAS_ENABLE_SINGLE_SIGN_OUT'):
+    #     warnings.warn(
+    #         'The MAMA_CAS_ENABLE_SINGLE_SIGN_OUT setting is deprecated. SLO '
+    #         'should be configured using MAMA_CAS_SERVICES.', DeprecationWarning)
+    # return getattr(settings, 'MAMA_CAS_ENABLE_SINGLE_SIGN_OUT', False)
 
 
 def proxy_allowed(service):
@@ -116,9 +118,8 @@ def proxy_callback_allowed(service, pgturl):
 
 
 def service_allowed(service):
-    clients = client_list.objects.all()
-    for client in clients:
-        if client.url == service:
-            return True
-    print('service不允许')
-    return False
+    """Check if a given service identifier is authorized."""
+    return True
+    # if hasattr(settings, 'MAMA_CAS_SERVICES'):
+    #     return _is_allowed('service_allowed', service)
+    # return _is_valid_service_url(service)

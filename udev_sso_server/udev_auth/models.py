@@ -16,7 +16,7 @@ class client_list(models.Model):
     name = models.CharField(max_length=255, unique=True)
     url = models.URLField(max_length=255, unique=True)
     callback = models.URLField(max_length=255, unique=True, null=True)
-    img = models.ImageField(upload_to='images',max_length=255, null=True, blank=True)
+    img = models.ImageField(upload_to='images', max_length=255, null=True, blank=True)
 
 
 

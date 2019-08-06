@@ -10,14 +10,12 @@ name = "udev"
 
 [packages]
 django = "==2.1.1"
-django-mama-cas = "==2.4.0"
 djongo = "==1.2.30"
 udev-settings = "==1.0.1"
 udev-db = "==1.1.2"
 python-dotenv = "*"
 pyjwt = "*"
-pymysql = "*"
-jquery = "*"
+
 
 [dev-packages]
 

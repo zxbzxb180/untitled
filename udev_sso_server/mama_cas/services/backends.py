@@ -3,39 +3,42 @@ import re
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.functional import cached_property
+from udev_auth import models
 
 
 class ServiceConfig(object):
     PROXY_ALLOW_DEFAULT = False
     CALLBACKS_DEFAULT = []
-    LOGOUT_ALLOW_DEFAULT = False
-    LOGOUT_URL_DEFAULT = None
+    #LOGOUT_ALLOW_DEFAULT = False
+    #LOGOUT_URL_DEFAULT = None
 
     @cached_property
     def services(self):
         services = []
 
-        for service in getattr(settings, 'MAMA_CAS_SERVICES', []):
-            service = service.copy()
+        for a in models.client_list.objects.all():
+            service = {'SERVICE': a.url,
+                       'LOGOUT_ALLOW': True,
+                       'LOGOUT_URL': a.callback}
             try:
                 match = re.compile(service['SERVICE'])
             except KeyError:
                 raise ImproperlyConfigured(
                     'Missing SERVICE key for service configuration. '
-                    'Check your MAMA_CAS_VALID_SERVICES setting.')
+                    #'Check your MAMA_CAS_VALID_SERVICES setting.'
+                )
 
             service['MATCH'] = match
             # TODO For transitional backwards compatibility, this defaults to True.
             service.setdefault('PROXY_ALLOW', True)
             service.setdefault('CALLBACKS', self.CALLBACKS_DEFAULT)
-            service.setdefault('LOGOUT_ALLOW', self.LOGOUT_ALLOW_DEFAULT)
-            service.setdefault('LOGOUT_URL', self.LOGOUT_URL_DEFAULT)
+            #service.setdefault('LOGOUT_ALLOW', self.LOGOUT_ALLOW_DEFAULT)
+            #service.setdefault('LOGOUT_URL', self.LOGOUT_URL_DEFAULT)
             try:
-                service['PROXY_PATTERN'] = re.compile(service['PROXY_PATTERN'])
+                 service['PROXY_PATTERN'] = re.compile(service['PROXY_PATTERN'])
             except KeyError:
-                pass
+                 pass
             services.append(service)
-
         return services
 
     def get_service(self, s):
@@ -68,10 +71,12 @@ class SettingsBackend(object):
         return services.get_config(service, 'CALLBACKS')
 
     def get_logout_url(self, service):
-        return services.get_config(service, 'LOGOUT_URL')
+        return models.client_list.objects.get(url=service).callback
+        #return services.get_config(service, 'LOGOUT_URL')
 
     def logout_allowed(self, service):
-        return services.get_config(service, 'LOGOUT_ALLOW')
+        return True
+        #return services.get_config(service, 'LOGOUT_ALLOW')
 
     def proxy_allowed(self, service):
         return services.get_config(service, 'PROXY_ALLOW')

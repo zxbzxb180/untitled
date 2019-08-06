@@ -19,14 +19,12 @@ from django.urls import include
 from django.conf.urls import url
 from django.urls import path
 from udev_auth import views as auth_views
-import mama_cas.urls
 from django.conf.urls.static import static
 from mama_cas.views import *
 
 
 
 urlpatterns = [
-    #url(r'', include('mama_cas.urls')),
     url(r'^logout/?$', auth_views.Logout_urun.as_view(), name='cas_logout'),
     url(r'^validate/?$', ValidateView.as_view(), name='cas_validate'),
     url(r'^serviceValidate/?$', ServiceValidateView.as_view(), name='cas_service_validate'),
@@ -54,8 +52,5 @@ urlpatterns = [
     url(r'^alter_client/?$', auth_views.alter_client, name='alter_client'),
     url(r'^alter/?$', auth_views.alter, name='alter'),
     url(r'^delete/?$', auth_views.delete, name='delete'),
-
-
-
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

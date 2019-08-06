@@ -5,10 +5,6 @@ import sys
 from dotenv import load_dotenv
 
 
-from udev_auth import services
-import mama_cas.services
-mama_cas.services = services
-
 
 if __name__ == '__main__':
     load_dotenv(override=True)
