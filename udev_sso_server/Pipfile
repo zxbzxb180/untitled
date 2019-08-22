@@ -15,7 +15,7 @@ udev-settings = "==1.0.1"
 udev-db = "==1.1.2"
 python-dotenv = "*"
 pyjwt = "*"
-
+xmltodict = "*"
 
 [dev-packages]
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "bb0c09141d38ac5462c555c9f28e664bf35e77218bd79efdaa8b5d515b159267"
+            "sha256": "c85faf6cdfb711208937e84b76b1fe457f7b27a8bac0c53ac718ebd7938ebc12"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -21,20 +21,6 @@
         ]
     },
     "default": {
-        "certifi": {
-            "hashes": [
-                "sha256:046832c04d4e752f37383b628bc601a7ea7211496b4638f6514d0e5b9acc4939",
-                "sha256:945e3ba63a0b9f577b1395204e13c3a231f9bc0223888be653286534e5873695"
-            ],
-            "version": "==2019.6.16"
-        },
-        "chardet": {
-            "hashes": [
-                "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae",
-                "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"
-            ],
-            "version": "==3.0.4"
-        },
         "dataclasses": {
             "hashes": [
                 "sha256:454a69d788c7fda44efd71e259be79577822f5e3f53f029a22d08004e951dc9f",
@@ -50,14 +36,6 @@
             "index": "pypi",
             "version": "==2.1.1"
         },
-        "django-mama-cas": {
-            "hashes": [
-                "sha256:4c284773c2f66030a6d391e7a092ac2014652155d05f411c4d9a2233e5902b3c",
-                "sha256:b7c8c8cff1ff82bca71518272a8ca6e87a6866737351558e056163d4ca1f7a97"
-            ],
-            "index": "pypi",
-            "version": "==2.4.0"
-        },
         "djongo": {
             "hashes": [
                 "sha256:4accec6327e3334f37eca34c403b658f0ada97b3d33af6c25432d48816578a7c",
@@ -65,13 +43,6 @@
             ],
             "index": "pypi",
             "version": "==1.2.30"
-        },
-        "idna": {
-            "hashes": [
-                "sha256:c357b3f628cf53ae2c4c05627ecc484553142ca23264e593d327bcde5e9c3407",
-                "sha256:ea8b7f6188e6fa117537c3df7da9fc686d485087abf6ac197f9c46432f7e4a3c"
-            ],
-            "version": "==2.8"
         },
         "motor": {
             "hashes": [
@@ -121,14 +92,6 @@
             ],
             "version": "==3.8.0"
         },
-        "pymysql": {
-            "hashes": [
-                "sha256:3943fbbbc1e902f41daf7f9165519f140c4451c179380677e6a848587042561a",
-                "sha256:d8c059dcd81dedb85a9f034d5e22dcb4442c0b201908bede99e306d65ea7c8e7"
-            ],
-            "index": "pypi",
-            "version": "==0.9.3"
-        },
         "python-dateutil": {
             "hashes": [
                 "sha256:7e6584c74aeed623791615e26efd690f29817a27c73085b78e4bad02493df2fb",
@@ -146,17 +109,10 @@
         },
         "pytz": {
             "hashes": [
-                "sha256:303879e36b721603cc54604edcac9d20401bdbe31e1e4fdee5b9f98d5d31dfda",
-                "sha256:d747dd3d23d77ef44c6a3526e274af6efeb0a6f1afd5a69ba4d5be4098c8e141"
+                "sha256:26c0b32e437e54a18161324a2fca3c4b9846b74a8dccddd843113109e1116b32",
+                "sha256:c894d57500a4cd2d5c71114aaab77dbab5eabd9022308ce5ac9bb93a60a6f0c7"
             ],
-            "version": "==2019.1"
-        },
-        "requests": {
-            "hashes": [
-                "sha256:11e007a8a2aa0323f5a921e9e6a2d7e4e67d9877e85773fba9ba6419025cbeb4",
-                "sha256:9cf5292fcd0f598c671cfc1e0d7d1a7f13bb8085e9a590f48c010551dc6c4b31"
-            ],
-            "version": "==2.22.0"
+            "version": "==2019.2"
         },
         "six": {
             "hashes": [
@@ -186,12 +142,13 @@
             "index": "pypi",
             "version": "==1.0.1"
         },
-        "urllib3": {
+        "xmltodict": {
             "hashes": [
-                "sha256:b246607a25ac80bedac05c6f282e3cdaf3afb65420fd024ac94435cabe6e18d1",
-                "sha256:dbe59173209418ae49d485b87d1681aefa36252ee85884c31346debd19463232"
+                "sha256:50d8c638ed7ecb88d90561beedbf720c9b4e851a9fa6c47ebd64e99d166d8a21",
+                "sha256:8bbcb45cc982f48b2ca8fe7e7827c5d792f217ecf1792626f808bf41c3b86051"
             ],
-            "version": "==1.25.3"
+            "index": "pypi",
+            "version": "==0.12.0"
         }
     },
     "develop": {}

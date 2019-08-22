@@ -40,4 +40,7 @@ class CasResponseMixin(object):
         return self.render_to_response(context)
 
     def render_to_response(self, context):
+        format = context.get('format')
+        if format == 'json':
+            self.content_type = 'text/json'
         return self.response_class(context, content_type=self.content_type)

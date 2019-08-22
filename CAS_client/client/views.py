@@ -6,7 +6,7 @@ from xml.etree import ElementTree
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.conf import settings
 from importlib import import_module
-
+import json
 
 SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
 
@@ -16,7 +16,8 @@ CAS_host = 'http://127.0.0.1:30000/'
 def login(request):
     if request.method == 'GET':
         if request.COOKIES.get('sessionid_client_1_cas'):
-            return HttpResponse('已登录')
+            pass
+            #return HttpResponse('已登录')
 
         #获取ticket
         tkt = request.GET.get('ticket')
@@ -28,18 +29,13 @@ def login(request):
 
             return HttpResponseRedirect(redirect)
 
-
-
-
-
-
         #验证ticket是否有效
-        check = CAS_host + 'serviceValidate?ticket=' + tkt + '&service=' + request.build_absolute_uri('?')
+        check = CAS_host + 'serviceValidate?ticket=' + tkt + '&service=' + request.build_absolute_uri()+'&format=json'
 
         #打开页面
         response = requests.get(check)
 
-
+        print(response.text)
         userid = ''
 
         #若响应为空，则验证信息为空

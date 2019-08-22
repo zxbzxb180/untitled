@@ -23,7 +23,7 @@ from mama_cas.cas import validate_proxy_granting_ticket
 from mama_cas.mixins import NeverCacheMixin
 from mama_cas.models import ProxyTicket
 from mama_cas.models import ServiceTicket
-from mama_cas.response import ValidationResponse
+from mama_cas.response import ValidationResponse, Test
 from mama_cas.response import ProxyResponse
 from mama_cas.response import SamlValidationResponse
 from mama_cas.services import service_allowed
@@ -244,17 +244,21 @@ class ServiceValidateView(NeverCacheMixin, CasResponseMixin, View):
     ``ProxyGrantingTicket`` if the proxy callback URL has a valid SSL
     certificate and responds with a successful HTTP status code.
     """
-    response_class = ValidationResponse
+    #response_class = ValidationResponse
+    response_class = Test
 
     def get_context_data(self, **kwargs):
         service = self.request.GET.get('service')
         ticket = self.request.GET.get('ticket')
         pgturl = self.request.GET.get('pgtUrl')
         renew = to_bool(self.request.GET.get('renew'))
+        format = self.request.GET.get('format')
+        if format == None:
+            format = 'xml'
 
         try:
             st, attributes, pgt = validate_service_ticket(service, ticket, pgturl=pgturl, renew=renew)
-            return {'ticket': st, 'pgt': pgt, 'attributes': attributes, 'error': None}
+            return {'ticket': st, 'pgt': pgt, 'attributes': attributes, 'error': None, 'format': format}
         except ValidationError as e:
             logger.warning("%s %s" % (e.code, e))
             return {'ticket': None, 'error': e}

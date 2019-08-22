@@ -1,4 +1,6 @@
 import datetime
+import xmltodict
+import json
 
 from django.http import HttpResponse
 from django.utils.crypto import get_random_string
@@ -89,6 +91,20 @@ class ValidationResponse(CasResponseBase):
             auth_failure.text = str(error)
 
         return etree.tostring(service_response, encoding='UTF-8')
+
+
+class Test(ValidationResponse):
+
+    def render_content(self, context):
+        format = context.get('format')
+        if format == 'xml':
+            return super(Test, self).render_content(context)
+
+        elif format == 'json':
+            xml = super(Test, self).render_content(context)
+            xml_to_json = xmltodict.parse(xml)
+            json_str = json.dumps(xml_to_json)
+            return json_str
 
 
 class ProxyResponse(CasResponseBase):

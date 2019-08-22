@@ -70,9 +70,12 @@ class MongoUser(ModelBackend):
     """
 
     def authenticate(self, request, username=None, password=None, **kwargs):
-        if check_origin_auth(username, password):
-            # 只要是在 udev 用户数据库找到了用户，那就能正确登录
-            # 如果没有在本地数据库找到，就新建一个
-            username = account_transform(request.GET.get('service'), username)
-            user = create_or_get_user(username)
-            return user
+        if password is not None:
+            if check_origin_auth(username, password):
+                # 只要是在 udev 用户数据库找到了用户，那就能正确登录
+                # 如果没有在本地数据库找到，就新建一个
+                username = account_transform(request.GET.get('service'), username)
+                user = create_or_get_user(username)
+                return user
+        else:
+            super(MongoUser, self).authenticate(request, username=None, password=None, **kwargs)
