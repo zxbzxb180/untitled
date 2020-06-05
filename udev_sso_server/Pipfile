@@ -9,7 +9,7 @@ verify_ssl = false
 name = "udev"
 
 [packages]
-django = "==2.1.1"
+django = "==2.2.13"
 djongo = "==1.2.30"
 udev-settings = "==1.0.1"
 udev-db = "==1.1.2"
